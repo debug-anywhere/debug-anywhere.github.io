@@ -14,8 +14,30 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Debug Anywhere">
+        <style>
+          html {
+            background-color: #49c0e4;
+          }
+          html, body {
+            margin: 0;
+            padding: 0;
+          }
+          #wrap {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+          }
+          .slogon {
+            font-size: 25px;
+          }
+        </style>
     </head>
     <body>
-      <p>enjoy your debug journal!</p>
+      <div id="wrap">
+        <p class="slogon">Enjoy your debug journal.</p>
+      </div>
     </body>
 </html>
