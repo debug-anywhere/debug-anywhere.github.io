@@ -61,7 +61,7 @@ var statusTool = {
                 finishes = 0, errors = 0, ajax = 0,
                 handers = [
                     [{
-                        src: 'http://nstool.netease.com/ip.js',
+                        src: 'https://nstool.netease.com/ip.js',
                         charset: 'gbk'
                     }, function () {
                         window.ip = function (ip, isp, dnsIP, dnsCarrier) {
