@@ -71,7 +71,19 @@ var statusTool = {
                             ++finishes;
                             then();
                         }
-                    }, onerror]
+                    }, onerror],
+                    [
+                        {
+                            src: 'https://geoip-db.com/json/geoip.php?jsonp=geoipcallback'
+                        }, function () {
+                            window.geoipcallback = function (obj) {
+                                net.ipList.push({ ip: obj.IPv4, prodiver: 'geoip-db' })
+                                ++ finishes;
+                                then();
+                            }
+                        },
+                        onerror
+                    ]
                 ];
             function onerror(e) {
                 e && ++errors; then();

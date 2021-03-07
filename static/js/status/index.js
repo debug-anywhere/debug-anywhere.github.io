@@ -130,7 +130,7 @@ class StatusCheck extends React.Component {
                     <td>{ipLoading ? this.renderLoading() : ipList.map(function (it, index) {
                         return (
                             <div key={index}>
-                                <strong>{it.ip}</strong>  {it.isp}  {it.prodiver}
+                                <strong>{it.ip}</strong>  {it.prodiver}
                             </div>
                         )
                     })}</td>
@@ -139,10 +139,12 @@ class StatusCheck extends React.Component {
                     <td>DNS IP</td>
                     <td>{ipLoading ? this.renderLoading() : dnsIP}</td>
                 </tr>
+                {/*
                 <tr>
                     <td>DNS Carrier</td>
                     <td>{ipLoading ? this.renderLoading() : dnsCarrier}</td>
                 </tr>
+                */}
                 </tbody>
             </table>
         );
