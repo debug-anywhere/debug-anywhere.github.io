@@ -32,7 +32,7 @@ class StatusCheck extends React.Component {
     getApis () {
         const self = this;
         var query = urlparseQuery(window.location.search);
-        var repo = 'https://raw.githubusercontent.com/' + query.user || query.org || 'debug-anywhere';
+        var repo = 'https://raw.githubusercontent.com/' + (query.user || query.org || 'debug-anywhere');
         Ajax.get(repo +'/debug-anywhere-status/main/status.txt' + '?t=' + Date.now(), {}, function (err, text) {
             var apis = text && text.split('\n').map(function (it) { return it.trim(); }).filter(function (it) {
                 if (/^https:\/\//i.test(it)) return true;
