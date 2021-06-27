@@ -30,10 +30,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
             color: white;
           }
           .slogon {
             font-size: 25px;
+            margin-top: 0;
+          }
+          .logo {
+            width: 60px;
+          }
+          .download-btn {
+            width: 150px;
+            display: inline-block;
+            color: transparent;
+            height: 56px;
+            background: url(/static/images/download-icon.png) no-repeat;
+            background-size: 150px auto;
+          }
+          .download-btn.ios {
+            background-position-y: 100%;
+          }
+          @media (max-width: 767.98px) {
+            .download {
+              display: flex;
+              flex-direction: column;
+            }
+            .download-btn {
+              margin-bottom: 10px;
+            }
           }
         </style>
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -48,7 +73,12 @@
     </head>
     <body>
       <div id="wrap">
-        <p class="slogon">Enjoy your debugging journal.</p>
+        <a href="/"><img class="logo" src="/static/images/logo-1024.png" /></a>
+        <p class="slogon">Enjoy debugging journal.</p>
+        <div class="download">
+          <a href="https://apps.apple.com/cn/app/debug-anywhere/id1555924269" class="download-btn ios">iOS</a>
+          <a href="http://static.debug-anywhere.com/apk/debug-anywhere-latest.apk" class="download-btn android">Android</a>
+        </div>
       </div>
     </body>
 </html>

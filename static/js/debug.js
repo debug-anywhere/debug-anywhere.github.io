@@ -47,9 +47,9 @@ $('.list-group').on('click', 'button', function () {
         case 'navigator-share':
             if (navigator.canShare) {
                 navigator.share({
-                    url: 'https://www.debug-anywhere.com/download',
+                    url: 'https://www.debug-anywhere.com/',
                     title: 'Download DebugAnywhere',
-                    text: 'DebugAnywhere is a efficient debugging tool for mobile'
+                    text: 'DebugAnywhere is an efficient debugging tool for mobile'
                 });
                 showStatus(true);
             } else {
