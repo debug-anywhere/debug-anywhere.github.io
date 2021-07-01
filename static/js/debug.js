@@ -8,6 +8,7 @@ $('.list-group').on('click', 'button', function () {
     var type = $this.closest('.list-group-item').attr('id');
     var $statusDom = $this.closest('.list-group-item').find('.status');
     var url = 'https://www.debug-anywhere.com/status?user=debug-anywhere';
+    var ajaxUrl = 'https://www.debug-anywhere.com/static/data/app.json';
 
     function showStatus (isSucc, dataOrError) {
         $statusDom.text(isSucc ? 'Success' : ('Fail: ' + dataOrError.message))
@@ -16,7 +17,7 @@ $('.list-group').on('click', 'button', function () {
 
     switch (type) {
         case 'ajax-request':
-            $.ajax(url).done(function (data) {
+            $.ajax(ajaxUrl).done(function (data) {
                 showStatus(true);
                 console.log(data);
             }).fail(function (xhr, status, error) {
