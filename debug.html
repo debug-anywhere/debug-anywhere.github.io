@@ -44,6 +44,26 @@
         </header>
         <div class="container">
             <ul class="list-group debug-list my-3 mx-1">
+                <li class="list-group-item" id="reload">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Reload current page</h5>
+                        <button class="btn btn-outline-primary btn-sm">Reload</button>
+                    </div>
+                </li>
+                <li class="list-group-item" id="trigger-debug">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Debug</h5>
+                        <button class="btn btn-outline-primary btn-sm">Debug</button>
+                    </div>
+                    <p class="mb-1">thanks to <a href="https://github.com/liriliri/eruda">eruda</a></p>
+                    <small class="status d-none"></small>
+                </li>
+                <li class="list-group-item" id="user-agent">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">UserAgent</h5>
+                    </div>
+                    <p class="mb-1"></p>
+                </li>
                 <li class="list-group-item" id="ajax-request">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Ajax Request</h5>
@@ -126,6 +146,6 @@
                 </li>
             </ul>
         </div>
-        <script src="/static/js/debug.js"></script>
+        <script src="/static/js/debug.js?t=0702"></script>
     </body>
 </html>

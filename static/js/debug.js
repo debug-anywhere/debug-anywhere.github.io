@@ -3,19 +3,64 @@ window.addEventListener("message", function (event) {
     console.info('get message:', event);
 }, false);
 
+$(document).ready(function () {
+    $('#user-agent').find('p').text(window.navigator.userAgent);
+});
+
+function loadJs(url, callback){
+    if (document.getElementById('script' + url)) {
+        return;
+    }
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    script.async = true;
+    script.setAttribute('id', 'script' + url);
+
+    var s = document.getElementsByTagName('script')[0];
+
+    s.parentNode.insertBefore(script, s);
+    script.onload = function () {
+        callback();
+    }
+    script.onerror = function () {
+        callback(new Error('load error'));
+        s.parentNode.removeChild(script);
+    } 
+}
+
 $('.list-group').on('click', 'button', function () {
     var $this = $(this);
-    var type = $this.closest('.list-group-item').attr('id');
-    var $statusDom = $this.closest('.list-group-item').find('.status');
+    var $listItem = $this.closest('.list-group-item');
+    var type = $listItem.attr('id');
+    var $statusDom = $listItem.find('.status');
     var url = 'https://www.debug-anywhere.com/status?user=debug-anywhere';
     var ajaxUrl = 'https://www.debug-anywhere.com/static/data/app.json';
 
     function showStatus (isSucc, dataOrError) {
-        $statusDom.text(isSucc ? 'Success' : ('Fail: ' + dataOrError.message))
+        $statusDom.text(typeof isSucc === 'boolean' ? isSucc ? 'Success' : ('Fail: ' + dataOrError.message) : isSucc);
         $statusDom.addClass(isSucc ? 'alert-success' : 'alert-danger');
     }
 
     switch (type) {
+        case 'reload':
+            window.location.reload();
+            break;
+        case 'trigger-debug':
+            $statusDom.removeClass('d-none');
+            showStatus('loading');
+            loadJs('https://cdnjs.cloudflare.com/ajax/libs/eruda/2.4.1/eruda.min.js', function (err) {
+                if (err) {
+                    showStatus(false, err);
+                } else {
+                    showStatus(true);
+                    eruda.init();
+                    var offset = $listItem.offset();
+                    eruda.position({ x: offset.left + $listItem.width() - 20,
+                        y: offset.top + $listItem.height() - 30 });
+                }
+            });
+            break;
         case 'ajax-request':
             $.ajax(ajaxUrl).done(function (data) {
                 showStatus(true);
@@ -85,5 +130,4 @@ $('.list-group').on('click', 'button', function () {
             })
             break;
     }
-
 })
