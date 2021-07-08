@@ -3,8 +3,30 @@ window.addEventListener("message", function (event) {
     console.info('get message:', event);
 }, false);
 
+function calScreen () {
+    var screenHtml = [
+        ['<strong>width</strong>: ' + window.screen.width + 'px',
+        '<strong>height</strong>: ' + window.screen.height + 'px'].join('&nbsp;&nbsp;'),
+        ['<strong>availWidth</strong>: ' + window.screen.availWidth + 'px',
+        '<strong>availHeight</strong>: ' + window.screen.availHeight + 'px'].join('&nbsp;&nbsp;'),
+        ['<strong>innerWidth</strong>: ' + window.innerWidth + 'px',
+        '<strong>innerHeight</strong>: ' + window.innerHeight + 'px'].join('&nbsp;&nbsp;'),
+        ['<strong>outerWidth</strong>: ' + window.outerWidth + 'px',
+        '<strong>outerHeight</strong>: ' + window.outerHeight + 'px'].join('&nbsp;&nbsp;'),
+    ];
+    if (window.devicePixelRatio) {
+        screenHtml.push('<strong>devicePixelRatio</strong>: ' + window.devicePixelRatio);
+    }
+
+    $('#screen-proto').find('p').html(screenHtml.join('<br />'));
+}
+
 $(document).ready(function () {
     $('#user-agent').find('p').text(window.navigator.userAgent);
+
+    window.onresize = function () {
+        calScreen();
+    }
 });
 
 function loadJs(url, callback){
