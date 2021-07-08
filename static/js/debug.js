@@ -24,6 +24,8 @@ function calScreen () {
 $(document).ready(function () {
     $('#user-agent').find('p').text(window.navigator.userAgent);
 
+    calScreen();
+
     window.onresize = function () {
         calScreen();
     }
