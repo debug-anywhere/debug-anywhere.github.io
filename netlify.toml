@@ -1,3 +1,8 @@
 [[edge_functions]]
-path = "/api/crawl"
-function = "crawl"
+    path = "/api/crawl"
+    function = "crawl"
+
+[dev]
+    command = "yarn dev"
+    port = 8888
+    targetPort = 9900

@@ -1,5 +1,6 @@
 export default async (req, context) => {
 	try {
+		const isLocal = req.url.startsWith('http://localhost');
 		const search = new URLPattern(req.url).search || '';
 		const searchArr = search.split('&').filter(it => it.startsWith('url='));
 		if (!searchArr.length) {
@@ -20,7 +21,7 @@ export default async (req, context) => {
 		return new Response(JSON.stringify({ code: 0, html }), {
 			headers: {
 				'content-type': 'application/json',
-				'Access-Control-Allow-Origin': 'https://www.debug-anywhere.com'
+				'Access-Control-Allow-Origin': isLocal ? '*' : 'https://www.debug-anywhere.com'
 			}
 		})
 		// return context.json({ code: 0, html: html });
@@ -28,7 +29,7 @@ export default async (req, context) => {
 		return new Response(JSON.stringify({ code: 1, msg: e.message }), {
 			headers: {
 				'content-type': 'application/json',
-				'Access-Control-Allow-Origin': 'https://www.debug-anywhere.com'
+				'Access-Control-Allow-Origin': isLocal ? '*' : 'https://www.debug-anywhere.com'
 			}
 		})
 		// return context.json({ code: 1, msg: e.message });
