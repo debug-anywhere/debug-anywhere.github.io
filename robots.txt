@@ -10,4 +10,7 @@ Disallow:
 User-agent: Googlebot
 Disallow:
 
+User-agent: Mediapartners-Google
+Disallow:
+
 Sitemap:https://www.debug-anywhere.com/sitemap.xml
