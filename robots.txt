@@ -1,3 +1,13 @@
 User-agent:*
 Disallow:
+
+User-agent: Google-adstxt
+Disallow:
+
+User-agent: AdsBot-Google
+Disallow:
+
+User-agent: Googlebot
+Disallow:
+
 Sitemap:https://www.debug-anywhere.com/sitemap.xml
