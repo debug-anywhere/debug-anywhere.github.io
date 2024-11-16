@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.SUPABASE_DATABASE_URL,
