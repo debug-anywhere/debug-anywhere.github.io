@@ -45,24 +45,24 @@ export default async function log(req, context) {
       `UA[${userAgent}], serverIp[${serverIp}], user_ip[${user_ip}], device_type[${device_type}], position[${position}], press_count[${press_count}], long_press_count[${long_press_count}] unique_id[${unique_id}]`
     );
 
-    const { error } = await supabase.from("adlog").insert({
-      server_ip: serverIp,
-      id: Math.floor((Date.now() + Math.random()) * 100),
-      created_at: new Date().toISOString(),
-      // Date.now(),
-      user_ip,
-      device_type,
-      press_count,
-      long_press_count,
-      position,
-      unique_id,
-      user_agent: userAgent,
-    });
+    // const { error } = await supabase.from("adlog").insert({
+    //   server_ip: serverIp,
+    //   id: Math.floor((Date.now() + Math.random()) * 100),
+    //   created_at: new Date().toISOString(),
+    //   // Date.now(),
+    //   user_ip,
+    //   device_type,
+    //   press_count,
+    //   long_press_count,
+    //   position,
+    //   unique_id,
+    //   user_agent: userAgent,
+    // });
 
-    if (error) {
-      console.warn("db error: ", error.message);
-      throw error;
-    }
+    // if (error) {
+    //   console.warn("db error: ", error.message);
+    //   throw error;
+    // }
     return new Response(JSON.stringify({ code: 0 }), {
       headers: {
         "content-type": "application/json",
