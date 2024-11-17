@@ -2,10 +2,6 @@
     path = "/api/crawl"
     function = "crawl"
 
-[[edge_functions]]
-    path = "/api/log"
-    function = "log"
-
 [dev]
     command = "yarn dev"
     port = 8888
