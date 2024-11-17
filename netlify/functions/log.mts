@@ -7,43 +7,43 @@ const supabase = createClient(
 
 // https://answers.netlify.com/t/parsing-request-body-event-body-throwing-error/104320
 
-function base64Decode(text) {
-  const bufferObj = Buffer.from(text, "utf8");
+// function base64Decode(text) {
+//   const bufferObj = Buffer.from(text, "utf8");
 
-  const base64String = bufferObj.toString("base64");
+//   const base64String = bufferObj.toString("base64");
 
-  return base64String;
-}
+//   return base64String;
+// }
 
 export default async function log(req, context) {
   try {
     const userAgent = req.headers.get("user-agent");
     const serverIp = context.ip;
-    const body = await req.json();
+    // const body = await req.json();
 
-    // console.log(body, serverIp);
+    // // console.log(body, serverIp);
 
-    if (
-      !body.device_type ||
-      !"press_count" in body ||
-      !"long_press_count" in body ||
-      !body.position
-    ) {
-      throw new Error("invalid params");
-    }
+    // if (
+    //   !body.device_type ||
+    //   !"press_count" in body ||
+    //   !"long_press_count" in body ||
+    //   !body.position
+    // ) {
+    //   throw new Error("invalid params");
+    // }
 
-    const {
-      user_ip,
-      device_type,
-      press_count,
-      long_press_count,
-      position,
-      unique_id,
-    } = body;
+    // const {
+    //   user_ip,
+    //   device_type,
+    //   press_count,
+    //   long_press_count,
+    //   position,
+    //   unique_id,
+    // } = body;
 
-    console.log(
-      `UA[${userAgent}], serverIp[${serverIp}], user_ip[${user_ip}], device_type[${device_type}], position[${position}], press_count[${press_count}], long_press_count[${long_press_count}] unique_id[${unique_id}]`
-    );
+    // console.log(
+    //   `UA[${userAgent}], serverIp[${serverIp}], user_ip[${user_ip}], device_type[${device_type}], position[${position}], press_count[${press_count}], long_press_count[${long_press_count}] unique_id[${unique_id}]`
+    // );
 
     // const { error } = await supabase.from("adlog").insert({
     //   server_ip: serverIp,
