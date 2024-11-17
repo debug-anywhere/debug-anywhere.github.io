@@ -22,8 +22,15 @@ const supabase = createClient(
 //   return base64String;
 // }
 
-exports.handler = async function (req, context) {
+exports.handler = async function (event, context) {
+    console.log("EVENT: \n" + JSON.stringify(event, null, 2));
+    
   try {
+    if (event.httpMethod !== 'POST') {
+      return { statusCode: 405, body: 'Method Not Allowed' };
+    }
+
+
     const userAgent = req.headers.get("user-agent");
     const serverIp = context.ip;
     console.log(userAgent, serverIp);
