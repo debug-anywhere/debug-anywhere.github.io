@@ -1,5 +1,5 @@
 // import { createClient } from "@supabase/supabase-js";
-const { createClient } = require('@supabase/supabase-js');
+const { createClient } = require("@supabase/supabase-js");
 
 const supabase = createClient(
   process.env.SUPABASE_DATABASE_URL,
@@ -23,15 +23,17 @@ const supabase = createClient(
 // }
 
 exports.handler = async function (event, context) {
-    console.log("EVENT: \n" + JSON.stringify(event, null, 2));
+  // console.log("EVENT: \n" + JSON.stringify(event, null, 2));
 
   try {
-    if (event.httpMethod !== 'POST') {
-      return { statusCode: 405, body: 'Method Not Allowed' };
+    if (event.httpMethod !== "POST") {
+      return {
+        statusCode: 405,
+        body: JSON.stringify({ code: 1, msg: "Method Not Allowed" }),
+      };
     }
     const userAgent = event.headers["user-agent"];
-    const serverIp = context.ip || event.headers['x-forwarded-for'];
-    console.log(userAgent, serverIp);
+    const serverIp = context.ip || event.headers["x-forwarded-for"];
     const body = JSON.parse(event.body);
 
     if (
@@ -50,6 +52,11 @@ exports.handler = async function (event, context) {
       long_press_count,
       position,
       unique_id,
+      ad_loaded,
+      ad_opened,
+      ad_loaderror,
+      ad_paid,
+      ad_size_change
     } = body;
 
     console.log(
@@ -60,14 +67,19 @@ exports.handler = async function (event, context) {
       server_ip: serverIp,
       id: Math.floor((Date.now() + Math.random()) * 100),
       created_at: new Date().toISOString(),
-      // Date.now(),
       user_ip,
       device_type,
       press_count,
       long_press_count,
       position,
       unique_id,
+      ad_loaded,
+      ad_opened,
+      ad_loaderror,
+      ad_paid,
+      ad_size_change,
       user_agent: userAgent,
+      data: event.body
     });
 
     if (error) {
