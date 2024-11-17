@@ -30,7 +30,7 @@ exports.handler = async function (event, context) {
       return { statusCode: 405, body: 'Method Not Allowed' };
     }
     const userAgent = event.headers["user-agent"];
-    const serverIp = context.ip;
+    const serverIp = context.ip || event.headers['x-forwarded-for'];
     console.log(userAgent, serverIp);
     const body = JSON.parse(event.body);
 
