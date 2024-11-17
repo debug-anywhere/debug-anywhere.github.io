@@ -17,9 +17,7 @@ function base64Decode(text) {
 
 export default async function log(req, context) {
   try {
-    const requestHeaders = Object.fromEntries(req.headers);
-    const userAgent = requestHeaders["user-agent"];
-
+    const userAgent = req.headers.get("user-agent");
     const serverIp = context.ip;
     const body = await req.json();
 
