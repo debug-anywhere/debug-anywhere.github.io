@@ -24,17 +24,15 @@ const supabase = createClient(
 
 exports.handler = async function (event, context) {
     console.log("EVENT: \n" + JSON.stringify(event, null, 2));
-    
+
   try {
     if (event.httpMethod !== 'POST') {
       return { statusCode: 405, body: 'Method Not Allowed' };
     }
-
-
-    const userAgent = req.headers.get("user-agent");
+    const userAgent = event.headers["user-agent"];
     const serverIp = context.ip;
     console.log(userAgent, serverIp);
-    const body = await req.json();
+    const body = JSON.parse(event.body);
 
     if (
       !body.device_type ||
