@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iOS WebView Debug Lab</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #eef4f7;
+      color: #17212b;
+    }
+    body {
+      margin: 0;
+      padding: 18px;
+    }
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 4px 0 8px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+    .lead {
+      margin: 0 0 18px;
+      color: #52616d;
+      line-height: 1.55;
+    }
+    section {
+      margin: 12px 0;
+      padding: 14px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 10px 28px rgba(26, 52, 68, 0.08);
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      color: #29424d;
+    }
+    button {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 8px 0 0;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #168aa0;
+      color: white;
+      font-weight: 700;
+    }
+    .pill {
+      display: inline-flex;
+      margin: 3px 5px 3px 0;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #e6f4f7;
+      color: #245363;
+      font-size: 12px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>iOS WebView Debug Lab</h1>
+    <p class="lead">A safe local page for DebugAnywhere screenshots: cookies, storage, User-Agent, bridge checks, and URL Scheme links.</p>
+
+    <section>
+      <h2>Runtime</h2>
+      <span class="pill">WKWebView-like checks</span>
+      <span class="pill">Real device workflow</span>
+      <pre id="runtime"></pre>
+    </section>
+
+    <section>
+      <h2>Cookie and Storage</h2>
+      <button id="write-state">Write debug state</button>
+      <button id="clear-state">Clear storage</button>
+      <pre id="state"></pre>
+    </section>
+
+    <section>
+      <h2>JSBridge Probe</h2>
+      <button id="mock-bridge">Mock bridge response</button>
+      <pre id="bridge"></pre>
+    </section>
+
+    <section>
+      <h2>URL Scheme</h2>
+      <a href="debuganywhere://?url=https%3A%2F%2Fwww.debug-anywhere.com%2Fguides%2Fios-webview-debugging">Open DebugAnywhere guide link</a>
+    </section>
+  </main>
+
+  <script>
+    function writeState() {
+      document.cookie = 'da_session=debug-session; path=/; SameSite=Lax';
+      document.cookie = 'da_env=staging; path=/; SameSite=Lax';
+      localStorage.setItem('token', 'debug-token-123');
+      localStorage.setItem('featureFlag', 'ios-webview-lab');
+      sessionStorage.setItem('checkoutStep', 'redirect-return');
+      renderState();
+    }
+
+    function renderRuntime() {
+      document.getElementById('runtime').textContent = JSON.stringify({
+        url: location.href,
+        userAgent: navigator.userAgent,
+        viewport: `${window.innerWidth}x${window.innerHeight}`,
+        platform: navigator.platform
+      }, null, 2);
+    }
+
+    function renderState() {
+      document.getElementById('state').textContent = JSON.stringify({
+        cookie: document.cookie,
+        localStorage: {
+          token: localStorage.getItem('token'),
+          featureFlag: localStorage.getItem('featureFlag')
+        },
+        sessionStorage: {
+          checkoutStep: sessionStorage.getItem('checkoutStep')
+        }
+      }, null, 2);
+    }
+
+    function renderBridge(extra) {
+      const handlers = window.webkit && window.webkit.messageHandlers
+        ? Object.keys(window.webkit.messageHandlers)
+        : [];
+      document.getElementById('bridge').textContent = JSON.stringify({
+        webkitHandlers: handlers,
+        DebugBridge: Object.keys(window.DebugBridge || {}),
+        lastMockResponse: extra || null
+      }, null, 2);
+    }
+
+    document.getElementById('write-state').addEventListener('click', writeState);
+    document.getElementById('clear-state').addEventListener('click', function () {
+      localStorage.clear();
+      sessionStorage.clear();
+      renderState();
+    });
+    document.getElementById('mock-bridge').addEventListener('click', function () {
+      window.DebugBridge = {
+        getUserInfo: function (callbackName) {
+          window[callbackName] && window[callbackName]({ id: 'debug-user', name: 'Debug User' });
+        }
+      };
+      renderBridge({ id: 'debug-user', name: 'Debug User' });
+    });
+
+    writeState();
+    renderRuntime();
+    renderBridge();
+  </script>
+</body>
+</html>
